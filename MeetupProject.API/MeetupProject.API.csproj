@@ -25,10 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\MeetupProject.BLL\MeetupProject.BLL.csproj" />
     <ProjectReference Include="..\MeetupProject.DAL\MeetupProject.DAL.csproj" />
   </ItemGroup>
 
