@@ -14,5 +14,6 @@ namespace MeetupProject.DAL.Entities
 
         public DateTimeOffset EventTime { get; set; }
         public string Place { get; set; }
+        public DateTimeOffset RecordCreatedTime { get; set; }
     }
 }
