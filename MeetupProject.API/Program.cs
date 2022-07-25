@@ -1,4 +1,5 @@
 using MeetupProject.API.Extensions;
+using MeetupProject.API.Middlewares;
 using MeetupProject.BLL.MappingProfiles;
 using MeetupProject.BLL.Services.EventService;
 using MeetupProject.DAL.Repositories;
@@ -30,5 +31,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.Run();

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MeetupProject.BLL.Models;
 using MeetupProject.BLL.Queries;
+using MeetupProject.Common.Exceptions;
 using MeetupProject.DAL.Entities;
 using MeetupProject.DAL.Repositories.EventDbRepositories;
 
@@ -31,7 +32,7 @@ namespace MeetupProject.BLL.Services.EventService
 
         public async Task<Event> DeleteAsync(Guid eventId)
         {
-            var existedEntity = await _eventRepository.GetByIdAsync(eventId) ?? throw new Exception("Not found");
+            var existedEntity = await _eventRepository.GetByIdAsync(eventId) ?? throw new NotFoundException("User not found");
             var deletedEntity = await _eventRepository.DeleteAsync(existedEntity);
             var entity = _mapper.Map<Event>(deletedEntity);
 
@@ -47,7 +48,7 @@ namespace MeetupProject.BLL.Services.EventService
 
         public async Task<Event> GetByIdAsync(Guid eventId)
         {
-            var eventEntity = await _eventRepository.GetByIdAsync(eventId) ?? throw new Exception("Not found");
+            var eventEntity = await _eventRepository.GetByIdAsync(eventId) ?? throw new NotFoundException("User not found");
             var e = _mapper.Map<Event>(eventEntity);
 
             return e;
