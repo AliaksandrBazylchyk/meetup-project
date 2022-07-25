@@ -7,7 +7,7 @@ namespace MeetupProject.DAL.Entities
         public string Name { get; set; }
         public EventType Type { get; set; }
         public string Description {  get; set; }
-        public IEnumerable<string> Plan { get; set; }
+        public List<string> Plan { get; set; }
 
         public string Organizer { get; set; }
         public string Speaker { get; set; }
