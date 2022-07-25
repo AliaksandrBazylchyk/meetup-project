@@ -2,6 +2,6 @@
 
 namespace MeetupProject.DAL.Repositories.EventDbRepositories
 {
-    public interface IEventEntityRepository : IBaseRepository<EventEntity>
+    public interface IEventRepository : IBaseRepository<EventEntity>
     { }
 }

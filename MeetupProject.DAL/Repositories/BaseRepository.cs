@@ -46,7 +46,7 @@ namespace MeetupProject.DAL.Repositories
             return entity;
         }
 
-        public async Task<T> UpdateAsync(Guid id, T entity)
+        public async Task<T> UpdateAsync(T entity)
         {
             DbSet.Update(entity);
 
