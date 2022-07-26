@@ -10,6 +10,11 @@ namespace MeetupProject.API.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
+        /// <summary>
+        /// Authorize on Identity Server
+        /// </summary>
+        /// <param name="request">Login-Password pair</param>
+        /// <returns>Access token with expire time onformation</returns>
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequest request)
         {

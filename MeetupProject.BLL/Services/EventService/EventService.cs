@@ -20,7 +20,11 @@ namespace MeetupProject.BLL.Services.EventService
             _eventRepository = eventRepository;
             _mapper = mapper;
         }
-
+        /// <summary>
+        /// Create new Event entity by Event Repository
+        /// </summary>
+        /// <param name="newEvent">Information about new entity</param>
+        /// <returns>Mappen Event entity into EventDTO</returns>
         public async Task<Event> CreateAsync(Event newEvent)
         {
             var newEntity = _mapper.Map<EventEntity>(newEvent);
@@ -31,6 +35,12 @@ namespace MeetupProject.BLL.Services.EventService
             return mappedEntity;
         }
 
+        /// <summary>
+        /// Check if entity with "eventId" is exist and after that deleting it.
+        /// </summary>
+        /// <param name="eventId">Event GUID for deleting</param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException">If entity with this GUID doesn't exist</exception>
         public async Task<Event> DeleteAsync(Guid eventId)
         {
             var existedEntity = await _eventRepository.GetByIdAsync(eventId) ?? throw new NotFoundException("User not found");
@@ -40,6 +50,10 @@ namespace MeetupProject.BLL.Services.EventService
             return entity;
         }
 
+        /// <summary>
+        /// Getting all entities from database and map them into EventDTO
+        /// </summary>
+        /// <returns>Array of Event objects</returns>
         public async Task<IEnumerable<Event>> GetAllAsync()
         {
             var entities = _eventRepository.GetAllAsync();
@@ -47,6 +61,12 @@ namespace MeetupProject.BLL.Services.EventService
             return entities.Select(e => _mapper.Map<Event>(e)).ToList();
         }
 
+        /// <summary>
+        /// Getting Event entity with GUID and map it into EventDTO
+        /// </summary>
+        /// <param name="eventId">Event Entity GUID for getting</param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException">If entity with this GUID doesn't exist</exception>
         public async Task<Event> GetByIdAsync(Guid eventId)
         {
             var eventEntity = await _eventRepository.GetByIdAsync(eventId) ?? throw new NotFoundException("User not found");
@@ -55,6 +75,12 @@ namespace MeetupProject.BLL.Services.EventService
             return e;
         }
 
+        /// <summary>
+        /// Getting query with modified properties. Check this properties on null or possible. Modife existing Event entity by not-null properties from query.
+        /// </summary>
+        /// <param name="id">Event entity GUID for modification</param>
+        /// <param name="updatedEvent">Qury with possible modify properties</param>
+        /// <returns>Updated Event entity (mapped into EventDTO)</returns>
         public async Task<Event> UpdateAsync(Guid id, EventUpdateQuery updatedEvent)
         {
             var eventEntity = await _eventRepository.GetByIdAsync(id);

@@ -25,6 +25,11 @@ namespace MeetupProject.API.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Endpoint to search for an event by its GUID.
+        /// </summary>
+        /// <param name="id">Event Guid from database</param>
+        /// <returns>Event object with id</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetEventById(Guid id)
         {
@@ -33,6 +38,10 @@ namespace MeetupProject.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Endpoint to view all events from database
+        /// </summary>
+        /// <returns>Array of Event objects</returns>
         [HttpGet]
         public async Task<IActionResult> GetAllEvents()
         {
@@ -41,6 +50,12 @@ namespace MeetupProject.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Update existed event record (if exception throwed doesn't do anything)
+        /// </summary>
+        /// <param name="id">Event GUID for modification</param>
+        /// <param name="model">Query with possible elements to change</param>
+        /// <returns>Updated event object</returns>
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateEventAsync(Guid id, [FromQuery] EventUpdateQuery model)
         {
@@ -49,6 +64,11 @@ namespace MeetupProject.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Delete existed event record (if exception throwed doesn't do anything)
+        /// </summary>
+        /// <param name="id">vent GUID for deleting</param>
+        /// <returns>Deleted event object</returns>
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteEventAsync(Guid id)
@@ -58,6 +78,11 @@ namespace MeetupProject.API.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Create new record with new event
+        /// </summary>
+        /// <param name="newEvent">object contain whole information about new event</param>
+        /// <returns>Created object</returns>
         [HttpPost]
         public async Task<IActionResult> CreateEventAsync(CreateEventRequest newEvent)
         {
