@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 IConfiguration configuration = new ConfigurationBuilder().AddEnvironmentVariables().Build();
 var EventsDatabaseConnectionString = configuration.GetSection("EVENTS_DATABASE_CONNECTION_STRING").Value;
 
-builder.Services.AddDbCollection(EventsDatabaseConnectionString);
+builder.Services.AddDbCollectionAsync(EventsDatabaseConnectionString);
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IEventRepository, EventRepository>();
@@ -34,6 +34,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MigrateDatabase();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
