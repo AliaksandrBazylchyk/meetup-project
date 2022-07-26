@@ -24,6 +24,7 @@ namespace MeetupProject.BLL.Services.EventService
         public async Task<Event> CreateAsync(Event newEvent)
         {
             var newEntity = _mapper.Map<EventEntity>(newEvent);
+            newEntity.RecordCreatedTime = DateTimeOffset.Now;
             var entity = await _eventRepository.CreateAsync(newEntity);
             var mappedEntity = _mapper.Map<Event>(entity);
 

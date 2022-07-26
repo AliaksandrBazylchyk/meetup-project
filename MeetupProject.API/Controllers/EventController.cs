@@ -1,4 +1,6 @@
-﻿using MeetupProject.BLL.Models;
+﻿using AutoMapper;
+using MeetupProject.API.Requests;
+using MeetupProject.BLL.Models;
 using MeetupProject.BLL.Queries;
 using MeetupProject.BLL.Services.EventService;
 using Microsoft.AspNetCore.Mvc;
@@ -10,12 +12,15 @@ namespace MeetupProject.API.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventService _eventService;
+        private readonly IMapper _mapper;
 
         public EventController(
-            IEventService eventService
+            IEventService eventService,
+            IMapper mapper
             )
         {
             _eventService = eventService;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -51,9 +56,10 @@ namespace MeetupProject.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEventAsync(Event newEvent)
+        public async Task<IActionResult> CreateEventAsync(CreateEventRequest newEvent)
         {
-            var result = await _eventService.CreateAsync(newEvent);
+            var mappedEvent = _mapper.Map<Event>(newEvent);
+            var result = await _eventService.CreateAsync(mappedEvent);
 
             return Ok(result);
         }

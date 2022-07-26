@@ -1,9 +1,11 @@
 using MeetupProject.API.Extensions;
+using MeetupProject.API.MappingProfiles;
 using MeetupProject.API.Middlewares;
 using MeetupProject.BLL.MappingProfiles;
 using MeetupProject.BLL.Services.EventService;
 using MeetupProject.DAL.Repositories;
 using MeetupProject.DAL.Repositories.EventDbRepositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,14 +13,35 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbCollection("Host=localhost;Port=5432;Database=events;Username=postgres;Password=root");
+IConfiguration configuration = new ConfigurationBuilder().AddEnvironmentVariables().Build();
+var EventsDatabaseConnectionString = configuration.GetSection("EVENTS_DATABASE_CONNECTION_STRING").Value;
+var identityServerConnectionString = configuration.GetSection("IDENTITY_SERVER_CONNECTION_STRING").Value;
+
+builder.Services.AddDbCollection(EventsDatabaseConnectionString);
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 
 builder.Services.AddAutoMapper(typeof(BllMappingProfile));
+builder.Services.AddAutoMapper(typeof(ApiMappingProfile));
 
 builder.Services.AddScoped<IEventService, EventService>();
+
+builder.Services.AddAuthentication(s =>
+{
+    s.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    s.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.Authority = identityServerConnectionString;
+    /*********************************************************/
+    /*          TODO Comment this code on Release            */
+    /*********************************************************/
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters.ValidateAudience = false;
+    options.TokenValidationParameters.ValidateIssuer = false;
+    /*********************************************************/
+});
 
 var app = builder.Build();
 
@@ -29,8 +52,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
+
+app.MigrateDatabase();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
