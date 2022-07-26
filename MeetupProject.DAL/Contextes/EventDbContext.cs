@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeetupProject.DAL.Contextes
 {
-    public sealed class EventDbContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
+    public sealed class EventDbContext : DbContext
     {
         public DbSet<EventEntity> Events { get; set; }
 
