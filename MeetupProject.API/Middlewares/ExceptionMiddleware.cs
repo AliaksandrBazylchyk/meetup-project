@@ -11,6 +11,11 @@ namespace MeetupProject.API.Middlewares
         {
             _next = next;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="httpContext">All http context from server</param>
+        /// <returns>if request pass without exceptions continue work with him(request). Any other way cathing exception and handle it.</returns>
         public async Task InvokeAsync(HttpContext httpContext)
         {
             try
@@ -23,6 +28,12 @@ namespace MeetupProject.API.Middlewares
 
             }
         }
+        /// <summary>
+        /// Exception handler with automatic Status Code respone detection
+        /// </summary>
+        /// <param name="context">Which request caused the exception</param>
+        /// <param name="exception">The exception that happened</param>
+        /// <returns>Error Details object with status code and exception information</returns>
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             context.Response.ContentType = "application/json";
