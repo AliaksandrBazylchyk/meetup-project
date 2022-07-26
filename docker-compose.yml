@@ -16,6 +16,8 @@ services:
   meetupproject.api:
     image: ${DOCKER_REGISTRY-}meetupprojectapi
     container_name: api
+    environment: 
+        EVENTS_DATABASE_CONNECTION_STRING: "Host=localhost;Port=5432;Database=events;Username=postgres;Password=root"
     build:
       context: .
       dockerfile: MeetupProject.API/Dockerfile

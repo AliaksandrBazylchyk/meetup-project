@@ -11,7 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbCollection("Host=localhost;Port=5432;Database=events;Username=postgres;Password=root");
+IConfiguration configuration = new ConfigurationBuilder().AddEnvironmentVariables().Build();
+var EventsDatabaseConnectionString = configuration.GetSection("EVENTS_DATABASE_CONNECTION_STRING").Value;
+
+builder.Services.AddDbCollection(EventsDatabaseConnectionString);
 
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IEventRepository, EventRepository>();
