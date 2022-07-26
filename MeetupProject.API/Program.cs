@@ -1,4 +1,5 @@
 using MeetupProject.API.Extensions;
+using MeetupProject.API.MappingProfiles;
 using MeetupProject.API.Middlewares;
 using MeetupProject.BLL.MappingProfiles;
 using MeetupProject.BLL.Services.EventService;
@@ -22,6 +23,7 @@ builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IEventRepository, EventRepository>();
 
 builder.Services.AddAutoMapper(typeof(BllMappingProfile));
+builder.Services.AddAutoMapper(typeof(ApiMappingProfile));
 
 builder.Services.AddScoped<IEventService, EventService>();
 

@@ -7,7 +7,7 @@ namespace MeetupProject.BLL.MappingProfiles
 {
     public class BllMappingProfile : Profile
     {
-        public override string ProfileName => "BusinessLoginMappingProfile";
+        public override string ProfileName => "BusinessLogicMappingProfile";
         public BllMappingProfile()
         {
             CreateMap<Event, EventEntity>();
