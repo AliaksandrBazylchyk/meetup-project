@@ -3,6 +3,8 @@ using MeetupProject.API.Requests;
 using MeetupProject.BLL.Models;
 using MeetupProject.BLL.Queries;
 using MeetupProject.BLL.Services.EventService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MeetupProject.API.Controllers
@@ -48,6 +50,7 @@ namespace MeetupProject.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteEventAsync(Guid id)
         {
             var result = await _eventService.DeleteAsync(id);
