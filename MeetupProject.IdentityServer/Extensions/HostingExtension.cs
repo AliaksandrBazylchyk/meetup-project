@@ -50,6 +50,8 @@ internal static class HostingExtension
             .AddAspNetIdentity<IdentityUser<Guid>>()
             .AddDeveloperSigningCredential();
 
+        builder.Services.AddCors();
+
         return builder.Build();
     }
 
@@ -72,6 +74,7 @@ internal static class HostingExtension
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints => endpoints.MapControllers());
+        app.UseCors(opt => opt.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
         return app;
     }

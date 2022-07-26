@@ -43,6 +43,8 @@ builder.Services.AddAuthentication(s =>
     /*********************************************************/
 });
 
+builder.Services.AddCors();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -59,5 +61,7 @@ app.MapControllers();
 app.MigrateDatabase();
 
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseCors(opt => opt.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 app.Run();
