@@ -18,6 +18,7 @@ services:
     container_name: api
     environment: 
         EVENTS_DATABASE_CONNECTION_STRING: "Host=postgres-database;Database=events;Username=postgres;Password=root"
+        IDENTITY_SERVER_CONNECTION_STRING: "http://identity:5000"
     build:
       context: .
       dockerfile: MeetupProject.API/Dockerfile
