@@ -5,7 +5,7 @@ namespace MeetupProject.API.Extensions
 {
     public static class DatabaseExtension
     {
-        public static async Task<IServiceCollection> AddDbCollectionAsync(
+        public static IServiceCollection AddDbCollection(
             this IServiceCollection services,
             string connectionString
         )
